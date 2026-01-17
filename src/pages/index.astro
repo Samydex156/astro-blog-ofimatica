@@ -1,21 +1,193 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-const tituloPagina = "Bienvenido a Blog de Ofimática con Samuel Durán"
+const topics = [
+	{
+		title: "Word",
+		slug: "word",
+		description:
+			"Domina la redacción de documentos profesionales, normas APA y formatos.",
+		color: "var(--color-word)",
+		icon: "📝",
+	},
+	{
+		title: "Excel",
+		slug: "excel",
+		description:
+			"Aprende fórmulas, tablas dinámicas y análisis de datos desde cero.",
+		color: "var(--color-excel)",
+		icon: "📊",
+	},
+	{
+		title: "PowerPoint",
+		slug: "powerpoint",
+		description:
+			"Diseña presentaciones impactantes y visualmente atractivas.",
+		color: "var(--color-ppt)",
+		icon: "💡",
+	},
+];
 ---
 
 <Layout>
-	<main>
-		<h1>{tituloPagina}</h1>
-		<p>Sitio orientado al aprendizaje de herramientas ofimáticas.</p>
-	</main>
+	<div class="container">
+		<section class="hero">
+			<span class="badge">Blog para Estudiantes</span>
+			<h1>Domina las herramientas de ofimática</h1>
+			<p class="subtitle">
+				Tutoriales claros y directos para mejorar tu productividad en
+				tus trabajos y estudios. Sin rodeos, directo al grano.
+			</p>
+		</section>
+
+		<section class="topic-grid">
+			{
+				topics.map((topic) => (
+					<a href={`/${topic.slug}`} class="topic-card">
+						<div
+							class="icon-box"
+							style={`background-color: ${topic.color}20; color: ${topic.color}`}
+						>
+							{topic.icon}
+						</div>
+						<h3>{topic.title}</h3>
+						<p>{topic.description}</p>
+						<span class="link-text" style={`color: ${topic.color}`}>
+							Ver guías &rarr;
+						</span>
+					</a>
+				))
+			}
+		</section>
+
+		<section class="about-brief">
+			<h2>¿Por qué este blog?</h2>
+			<p>
+				Este espacio está diseñado para estudiantes que necesitan
+				soluciones rápidas. Encuentra trucos, plantillas y explicaciones
+				sencillas para tus tareas diarias.
+			</p>
+		</section>
+	</div>
 </Layout>
+
 <style>
-	main{
-		padding: 2rem;
+	/* Hero Section */
+	.hero {
 		text-align: center;
+		padding: 4rem 0 5rem;
+		max-width: 700px;
+		margin: 0 auto;
 	}
-	h1{
-		color: #3245ff;
+
+	.badge {
+		background-color: #eef2ff;
+		color: var(--color-word);
+		padding: 0.5rem 1rem;
+		border-radius: 50px;
+		font-size: 0.85rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		margin-bottom: 1.5rem;
+		display: inline-block;
+	}
+
+	.hero h1 {
+		font-size: 3.5rem;
+		letter-spacing: -0.02em;
+		color: var(--text-main);
+		margin-bottom: 1.5rem;
+	}
+
+	.subtitle {
+		font-size: 1.25rem;
+		color: var(--text-muted);
+		line-height: 1.7;
+	}
+
+	/* Topic Grid */
+	.topic-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 2rem;
+		margin-bottom: 6rem;
+	}
+
+	.topic-card {
+		background: var(--bg-card);
+		padding: 2.5rem;
+		border-radius: var(--radius-lg);
+		border: 1px solid var(--border-color);
+		transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		height: 100%;
+	}
+
+	.topic-card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
+		border-color: transparent;
+	}
+
+	.icon-box {
+		width: 50px;
+		height: 50px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 12px;
+		font-size: 1.5rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.topic-card h3 {
+		font-size: 1.5rem;
+		margin-bottom: 1rem;
+		color: var(--text-main);
+	}
+
+	.topic-card p {
+		font-size: 1rem;
+		color: var(--text-muted);
+		margin-bottom: 2rem;
+		flex-grow: 1; /* Pushes link-text to bottom */
+	}
+
+	.link-text {
+		font-weight: 600;
+		font-size: 0.95rem;
+		margin-top: auto;
+	}
+
+	/* About Brief */
+	.about-brief {
+		text-align: center;
+		max-width: 600px;
+		margin: 0 auto 4rem;
+		padding: 3rem;
+		background: #f3f4f6;
+		border-radius: var(--radius-lg);
+	}
+
+	.about-brief h2 {
+		font-size: 1.75rem;
+		margin-bottom: 1rem;
+	}
+
+	.about-brief p {
+		margin-bottom: 0;
+	}
+
+	@media (max-width: 768px) {
+		.hero h1 {
+			font-size: 2.5rem;
+		}
+
+		.topic-grid {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>

@@ -5,25 +5,204 @@
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Ofimática Samuel Durán</title>
+		<title>Ofimática para Estudiantes</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+			rel="stylesheet"
+		/>
 	</head>
 	<body>
-		<slot />
+		<header class="site-header">
+			<nav class="container">
+				<a href="/" class="logo">Ofimática<span class="dot">.</span></a>
+				<div class="nav-links">
+					<a href="/word" class="nav-link word">Word</a>
+					<a href="/excel" class="nav-link excel">Excel</a>
+					<a href="/powerpoint" class="nav-link powerpoint"
+						>PowerPoint</a
+					>
+				</div>
+			</nav>
+		</header>
+		<main>
+			<slot />
+		</main>
+		<footer class="site-footer">
+			<div class="container">
+				<p>
+					&copy; {new Date().getFullYear()} Blog de Ofimática. Aprendizaje
+					simple y elegante.
+				</p>
+			</div>
+		</footer>
 	</body>
 </html>
 
 <style is:global>
-	:root{
-		--fuente-principal: system-ui, sans-serif;
-		--color-fondo: #ffffff;
-		--color-texto: #333;
-	}
-	html,body{
-		margin: 0;
-		padding: 0;
-		font-family: var(--fuente-principal);
-		background-color: var(--color-fondo);
-		color: var(--color-texto);
+	:root {
+		/* Brand Colors - Elegant Muted Versions */
+		--color-word: #2b579a;
+		--color-excel: #217346;
+		--color-ppt: #d24726;
+
+		/* Neutral Colors */
+		--bg-body: #f9fafb;
+		--bg-card: #ffffff;
+		--text-main: #111827;
+		--text-muted: #6b7280;
+		--text-light: #9ca3af;
+		--border-color: #e5e7eb;
+
+		/* Spacing & Layout */
+		--container-width: 1000px;
+		--header-height: 70px;
+		--radius-md: 12px;
+		--radius-lg: 24px;
+
+		/* Typography */
+		--font-main: "Inter", system-ui, sans-serif;
 	}
 
+	html {
+		box-sizing: border-box;
+		scroll-behavior: smooth;
+	}
+
+	*,
+	*:before,
+	*:after {
+		box-sizing: inherit;
+	}
+
+	body {
+		margin: 0;
+		padding: 0;
+		font-family: var(--font-main);
+		background-color: var(--bg-body);
+		color: var(--text-main);
+		line-height: 1.6;
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		line-height: 1.2;
+		margin-bottom: 1rem;
+		font-weight: 700;
+	}
+
+	p {
+		margin-bottom: 1.5rem;
+		color: var(--text-muted);
+	}
+
+	a {
+		text-decoration: none;
+		color: inherit;
+		transition: opacity 0.2s ease;
+	}
+
+	a:hover {
+		opacity: 0.8;
+	}
+
+	/* Layout Classes */
+	.container {
+		max-width: var(--container-width);
+		margin: 0 auto;
+		padding: 0 1.5rem;
+		width: 100%;
+	}
+
+	/* Header */
+	.site-header {
+		height: var(--header-height);
+		background: var(--bg-card);
+		border-bottom: 1px solid var(--border-color);
+		display: flex;
+		align-items: center;
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		backdrop-filter: blur(8px);
+		background-color: rgba(255, 255, 255, 0.9);
+	}
+
+	.site-header nav {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.logo {
+		font-size: 1.5rem;
+		font-weight: 800;
+		letter-spacing: -0.03em;
+		color: var(--text-main);
+	}
+
+	.logo .dot {
+		color: var(--color-word);
+	}
+
+	.nav-links {
+		display: flex;
+		gap: 2rem;
+	}
+
+	.nav-link {
+		font-weight: 500;
+		font-size: 0.95rem;
+		padding: 0.5rem 0;
+		position: relative;
+	}
+
+	.nav-link::after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 0%;
+		height: 2px;
+		background: currentColor;
+		transition: width 0.3s ease;
+	}
+
+	.nav-link:hover::after {
+		width: 100%;
+	}
+
+	.nav-link.word:hover {
+		color: var(--color-word);
+	}
+	.nav-link.excel:hover {
+		color: var(--color-excel);
+	}
+	.nav-link.powerpoint:hover {
+		color: var(--color-ppt);
+	}
+
+	/* Main */
+	main {
+		flex: 1;
+		padding: 3rem 0;
+	}
+
+	/* Footer */
+	.site-footer {
+		padding: 2rem 0;
+		border-top: 1px solid var(--border-color);
+		background: var(--bg-card);
+		color: var(--text-muted);
+		text-align: center;
+		font-size: 0.9rem;
+	}
 </style>
