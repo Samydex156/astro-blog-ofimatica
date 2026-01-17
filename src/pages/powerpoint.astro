@@ -4,11 +4,11 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout>
     <div class="construction-container">
-        <div class="icon">📬</div>
-        <h1>Contacto en Construcción</h1>
+        <div class="icon">🏗️</div>
+        <h1>PowerPoint en Construcción</h1>
         <p>
-            Estamos habilitando nuestros canales de comunicación. Pronto podrás
-            enviarnos tus dudas.
+            Estamos diseñando las mejores diapositivas de aprendizaje. Pronto
+            encontrarás guías de PowerPoint aquí.
         </p>
         <a href="/" class="btn-home">Volver al Inicio</a>
     </div>
@@ -33,7 +33,7 @@ import Layout from "../layouts/Layout.astro";
     h1 {
         font-size: 2.5rem;
         margin-bottom: 1rem;
-        color: var(--text-main);
+        color: var(--color-ppt, #d24726);
     }
     p {
         color: var(--text-muted);
@@ -42,7 +42,7 @@ import Layout from "../layouts/Layout.astro";
         line-height: 1.6;
     }
     .btn-home {
-        background-color: var(--text-main);
+        background-color: var(--color-ppt, #d24726);
         color: white;
         padding: 0.8rem 2rem;
         border-radius: 50px;
@@ -54,6 +54,6 @@ import Layout from "../layouts/Layout.astro";
     }
     .btn-home:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 4px 12px rgba(210, 71, 38, 0.3);
     }
 </style>

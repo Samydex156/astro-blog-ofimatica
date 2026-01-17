@@ -1,0 +1,211 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const shortcuts = [
+    {
+        key: "Ctrl + C",
+        action: "Copiar celdas seleccionadas",
+        category: "Edición",
+    },
+    {
+        key: "Ctrl + V",
+        action: "Pegar contenido del portapapeles",
+        category: "Edición",
+    },
+    {
+        key: "Ctrl + X",
+        action: "Cortar celdas seleccionadas",
+        category: "Edición",
+    },
+    {
+        key: "Ctrl + Z",
+        action: "Deshacer la última acción",
+        category: "General",
+    },
+    {
+        key: "Ctrl + Y",
+        action: "Rehacer la última acción deshecha",
+        category: "General",
+    },
+    {
+        key: "Ctrl + 1",
+        action: "Abrir cuadro de diálogo de Formato de celdas",
+        category: "Formato",
+    },
+    {
+        key: "Ctrl + N",
+        action: "Aplicar Negrita",
+        category: "Formato",
+    },
+    {
+        key: "Alt + =",
+        action: "Autosuma de celdas adyacentes",
+        category: "Fórmulas",
+    },
+    {
+        key: "F2",
+        action: "Editar celda activa",
+        category: "Navegación",
+    },
+    {
+        key: "F4",
+        action: "Repetir última acción o alternar referencias absolutas/relativas",
+        category: "Formato",
+    },
+    {
+        key: "Ctrl + Flechas",
+        action: "Moverse al extremo de la región de datos actual",
+        category: "Navegación",
+    },
+];
+
+const categories = [...new Set(shortcuts.map((s) => s.category))];
+---
+
+<Layout>
+    <div class="container">
+        <header class="page-header">
+            <a href="/excel" class="back-link">← Volver a Excel</a>
+            <div class="header-content">
+                <div class="icon-header">⌨️</div>
+                <h1>Atajos de Teclado Excel</h1>
+                <p>
+                    Acelera tu flujo de trabajo y aumenta tu productividad con
+                    estos atajos esenciales.
+                </p>
+            </div>
+        </header>
+
+        <section class="shortcuts-container">
+            {
+                categories.map((category) => (
+                    <div class="category-group">
+                        <h2>{category}</h2>
+                        <div class="shortcuts-grid">
+                            {shortcuts
+                                .filter((s) => s.category === category)
+                                .map((shortcut) => (
+                                    <div class="shortcut-item">
+                                        <div class="key-combo">
+                                            {shortcut.key}
+                                        </div>
+                                        <div class="action-desc">
+                                            {shortcut.action}
+                                        </div>
+                                    </div>
+                                ))}
+                        </div>
+                    </div>
+                ))
+            }
+        </section>
+    </div>
+</Layout>
+
+<style>
+    .page-header {
+        padding: 3rem 0;
+        margin-bottom: 1rem;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-bottom: 2rem;
+        color: var(--color-excel);
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+
+    .header-content {
+        text-align: center;
+    }
+
+    .icon-header {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        background: #e6f4ea;
+        width: 70px;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin: 0 auto 1rem;
+        cursor: default;
+    }
+
+    .page-header h1 {
+        color: var(--color-excel);
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .shortcuts-container {
+        max-width: 800px;
+        margin: 0 auto 4rem;
+    }
+
+    .category-group {
+        margin-bottom: 3rem;
+    }
+
+    .category-group h2 {
+        color: var(--color-excel);
+        border-bottom: 2px solid #e6f4ea;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+    }
+
+    .shortcuts-grid {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .shortcut-item {
+        display: flex;
+        align-items: center;
+        background: white;
+        padding: 1rem;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-color);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .key-combo {
+        background: #333;
+        color: white;
+        padding: 0.25rem 0.6rem;
+        border-radius: 6px;
+        font-family: monospace;
+        font-weight: 700;
+        margin-right: 1.5rem;
+        white-space: nowrap;
+        font-size: 0.9rem;
+        box-shadow: 0 2px 0 #000;
+        min-width: 100px;
+        text-align: center;
+    }
+
+    .action-desc {
+        color: var(--text-main);
+        font-size: 1rem;
+    }
+
+    @media (max-width: 600px) {
+        .shortcut-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .key-combo {
+            margin-right: 0;
+            margin-bottom: 0.25rem;
+        }
+    }
+</style>
