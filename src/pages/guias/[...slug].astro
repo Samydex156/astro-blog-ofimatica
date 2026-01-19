@@ -1,0 +1,89 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+    const guides = await getCollection("guias");
+    return guides.map((guide: CollectionEntry<"guias">) => ({
+        params: { slug: guide.slug },
+        props: guide,
+    }));
+}
+
+type Props = CollectionEntry<"guias">;
+
+const guide = Astro.props;
+const { Content } = await guide.render();
+---
+
+<Layout title={guide.data.title}>
+    <article class="class-detail">
+        <header class="post-header">
+            <div class="meta">
+                <span class="tag">{guide.data.category.toUpperCase()}</span>
+            </div>
+            <h1>{guide.data.title}</h1>
+            <p class="description">{guide.data.description}</p>
+        </header>
+
+        <div class="content markdown-body">
+            <Content />
+        </div>
+
+        <div class="back-link">
+            <a href={`/${guide.data.category}`}>&larr; Volver al Módulo</a>
+        </div>
+    </article>
+</Layout>
+
+<style>
+    .class-detail {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 4rem 1.5rem;
+    }
+
+    .post-header {
+        margin-bottom: 3rem;
+        text-align: center;
+    }
+
+    .tag {
+        background: #f3f4f6;
+        padding: 0.25rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-weight: bold;
+        color: var(--text-main, #374151);
+        display: inline-block;
+        margin-bottom: 1rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        line-height: 1.2;
+        color: var(--text-main, #111827);
+        margin-bottom: 1rem;
+    }
+
+    .description {
+        font-size: 1.25rem;
+        color: var(--text-muted, #4b5563);
+    }
+
+    .content {
+        line-height: 1.8;
+    }
+
+    .back-link {
+        margin-top: 4rem;
+        padding-top: 2rem;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .back-link a {
+        color: #2563eb;
+        text-decoration: none;
+        font-weight: 600;
+    }
+</style>

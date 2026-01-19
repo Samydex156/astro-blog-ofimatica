@@ -10,6 +10,15 @@ tags: ['Excel', 'Intro', 'Clase']
 El pasado sábado 17 de enero de 2026 tuvimos nuestra primera sesión introductoria a Excel.
 
 ### Temas Cubiertos:
+0.  **Qué es Excel:**
+    Es una aplicación de hoja de cálculo que permite gestionar y calcular datos numéricos y alfanuméricos. Es la herramienta estándar para el procesamiento de datos mediante el uso de fórmulas, funciones y herramientas de análisis.
+    * **Se usa Excel para:**
+        * Cálculo matemático.
+        * Organización de la información.
+        * Análisis de datos.
+        * Visualización de datos mediante gráficos.
+        * Reportes y consolidaciones de datos.
+
 
 1.  **Ventana Principal de Excel**:
     *   Partes de la ventana principal de Excel
@@ -24,9 +33,8 @@ Un atajo de teclado es una combinación de teclas que se presionan para realizar
         ![Windows + E](./atajos-imagenes/excel_win_e_abrir_explorador_archivos.png)
     *   `Ctrl + Shift + N` : Crea una nueva carpeta
         ![Ctrl + Shift + N](./atajos-imagenes/excel_ctrl_shift_n_crear_nueva_carpeta.png)
-    *   `F12` : Abre la ventana de "Guardar como"
+    *   `F12` : Abre la ventana de "Guardar como". Y `Fn + F12` (En la mayoría de modelos de Laptos)
         ![F12](./atajos-imagenes/excel_f12_guardar_como.png)
-    *   `Fn + F12` : Abre la ventana de "Guardar como" (En Laptop)
     *   `Ctrl + Fin` : Ir al final de un bloque de datos.
         ![Ctrl + Fin](./atajos-imagenes/excel_ctrl_fin_ir_final_documento.png)
     *   `Ctrl + Inicio` : Ir al inicio de un bloque de datos o al inicio de la hoja
@@ -44,4 +52,4 @@ Un atajo de teclado es una combinación de teclas que se presionan para realizar
     *   `Ctrl + U` : Crear un nuevo libro de Excel
 
 ### Tarea
-Practicar la creación de una tabla simple con el horario de la semana.
+Se subirá en el transcurso de la semana (Pendiente)...

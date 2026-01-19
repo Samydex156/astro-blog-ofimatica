@@ -1,0 +1,367 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { downloads } from "../../data/downloads";
+
+export async function getStaticPaths() {
+    const modules = [
+        { id: "word", title: "Microsoft Word", icon: "📝", color: "#2b579a" },
+        { id: "excel", title: "Microsoft Excel", icon: "📊", color: "#217346" },
+        {
+            id: "powerpoint",
+            title: "PowerPoint",
+            icon: "📽️",
+            color: "#b7472a",
+        },
+        { id: "publisher", title: "Publisher", icon: "📰", color: "#0072c6" },
+        {
+            id: "internet",
+            title: "Internet e IA",
+            icon: "🌐",
+            color: "#1b99d4",
+        },
+        { id: "windows", title: "Windows", icon: "💻", color: "#0078d7" },
+    ];
+
+    return modules.map((mod) => ({
+        params: { tema: mod.id },
+        props: { moduleData: mod },
+    }));
+}
+
+const { tema } = Astro.params;
+const { moduleData } = Astro.props;
+
+// 1. Obtener Guias (Temas sueltos)
+const allGuias = await getCollection("guias");
+const moduleGuias = allGuias.filter((guide) => guide.data.category === tema);
+
+// 2. Obtener Clases recientes (Opcional: si quieres mostrar qué clases tocaron este tema)
+const allClasses = await getCollection("clases");
+const moduleClasses = allClasses.filter((clase) => clase.data.module === tema);
+
+// 3. Obtener Descargas
+const moduleDownloads = downloads.filter((d) => d.category === tema);
+---
+
+<Layout title={`Módulo: ${moduleData.title}`}>
+    <div class="container">
+        <header
+            class="page-header"
+            style={`--module-color: ${moduleData.color}`}
+        >
+            <div class="icon-header">{moduleData.icon}</div>
+            <h1>{moduleData.title}</h1>
+            <p>
+                Recursos, guías y descargas para dominar {moduleData.title}.
+            </p>
+        </header>
+
+        {/* Sección de GUIAS (Temas Sueltos) */}
+        {
+            moduleGuias.length > 0 && (
+                <section class="nav-section">
+                    <h2 class="section-heading">📚 Guías y Tutoriales</h2>
+                    <div class="nav-grid">
+                        {moduleGuias.map((guide) => (
+                            <a href={`/guias/${guide.slug}`} class="nav-card">
+                                <div class="nav-info">
+                                    <h3>{guide.data.title}</h3>
+                                    <p>{guide.data.description}</p>
+                                </div>
+                                <div
+                                    class="nav-arrow"
+                                    style={`color: ${moduleData.color}`}
+                                >
+                                    &rarr;
+                                </div>
+                            </a>
+                        ))}
+                    </div>
+                </section>
+            )
+        }
+
+        {/* Sección de CLASES RELACIONADAS */}
+        {
+            moduleClasses.length > 0 && (
+                <section class="classes-section">
+                    <h2 class="section-heading">📅 Clases de Sábado</h2>
+                    <div class="classes-grid">
+                        {moduleClasses.map((clase) => (
+                            <a
+                                href={`/clases/${clase.slug}`}
+                                class="class-card"
+                            >
+                                <div class="class-date">
+                                    {clase.data.pubDate.toLocaleDateString(
+                                        "es-ES",
+                                        { day: "numeric", month: "short" },
+                                    )}
+                                </div>
+                                <div class="class-info">
+                                    <h3>{clase.data.title}</h3>
+                                </div>
+                            </a>
+                        ))}
+                    </div>
+                </section>
+            )
+        }
+
+        {/* Sección de DESCARGAS */}
+        <section class="resources-section">
+            <div
+                class="section-title"
+                style={`--module-color: ${moduleData.color}`}
+            >
+                <h2>📂 Ejercicios y Recursos</h2>
+                <p>Archivos prácticos para descargar.</p>
+            </div>
+
+            {
+                moduleDownloads.length > 0 ? (
+                    <div class="resources-grid">
+                        {moduleDownloads.map((resource) => (
+                            <article class="resource-card">
+                                <div class="card-content">
+                                    <h3 style={`color: ${moduleData.color}`}>
+                                        {resource.title}
+                                    </h3>
+                                    <p>{resource.description}</p>
+                                </div>
+                                <div class="card-actions">
+                                    <a
+                                        href={resource.file}
+                                        download
+                                        class="btn-icon"
+                                        title="Descargar archivo"
+                                        style={`--hover-color: ${moduleData.color}`}
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                            <polyline points="7 10 12 15 17 10" />
+                                            <line
+                                                x1="12"
+                                                y1="15"
+                                                x2="12"
+                                                y2="3"
+                                            />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </article>
+                        ))}
+                    </div>
+                ) : (
+                    <p class="empty-msg">
+                        No hay descargas disponibles por el momento.
+                    </p>
+                )
+            }
+        </section>
+    </div>
+</Layout>
+
+<style>
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    .page-header {
+        text-align: center;
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+    }
+
+    .icon-header {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        background: var(--module-color, #333);
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin: 0 auto 1rem;
+        cursor: default;
+        filter: brightness(1.2); /* Un poco más claro */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        /* El icono en sí es texto (emoji), no necesitamos color de fuente específico si es emoji */
+    }
+
+    .page-header h1 {
+        color: var(--module-color);
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .section-heading {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--text-main, #333);
+        border-bottom: 2px solid #eee;
+        padding-bottom: 0.5rem;
+    }
+
+    /* NAV GRID (Guias) */
+    .nav-section {
+        margin-bottom: 3rem;
+    }
+
+    .nav-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1rem;
+    }
+
+    .nav-card {
+        background: white;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-decoration: none;
+        color: inherit;
+        transition:
+            transform 0.2s,
+            box-shadow 0.2s;
+    }
+
+    .nav-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-info h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.2rem;
+    }
+    .nav-info p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    /* CLASSES GRID */
+    .classes-section {
+        margin-bottom: 3rem;
+    }
+    .classes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+    .class-card {
+        background: #f9fafb;
+        border: 1px solid #eee;
+        padding: 1rem;
+        border-radius: 8px;
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    .class-card:hover {
+        background: #f3f4f6;
+    }
+    .class-date {
+        font-weight: bold;
+        color: var(--module-color);
+        font-size: 0.9rem;
+        text-align: center;
+        line-height: 1.2;
+    }
+    .class-info h3 {
+        margin: 0;
+        font-size: 1rem;
+    }
+
+    /* RESOURCES / DOWNLOADS */
+    .resources-section {
+        margin-bottom: 4rem;
+    }
+
+    .section-title {
+        margin-bottom: 1.5rem;
+        border-left: 4px solid var(--module-color);
+        padding-left: 1rem;
+    }
+
+    .section-title h2 {
+        margin-bottom: 0.25rem;
+        font-size: 1.5rem;
+    }
+
+    .section-title p {
+        margin-bottom: 0;
+        font-size: 0.95rem;
+    }
+
+    .resources-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 1rem;
+    }
+
+    .resource-card {
+        border: 1px solid #eee;
+        border-radius: 8px;
+        padding: 1.25rem;
+        background: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .card-content h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.1rem;
+    }
+    .card-content p {
+        font-size: 0.9rem;
+        margin: 0;
+        color: #666;
+    }
+
+    .btn-icon {
+        background-color: transparent;
+        color: #666;
+        border: 1px solid #eee;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+    }
+
+    .btn-icon:hover {
+        background-color: var(--hover-color);
+        color: white;
+        border-color: var(--hover-color);
+    }
+
+    .empty-msg {
+        font-style: italic;
+        color: #888;
+    }
+</style>
