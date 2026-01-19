@@ -63,6 +63,20 @@ const { Content } = await post.render();
         const captionText = document.getElementById("caption");
         const closeBtn = document.querySelector(".close-modal");
 
+        // Función para abrir el modal y añadir estado al historial
+        function openModal(src: string, description: string) {
+            if (modal && modalImg && captionText) {
+                modal.style.display = "flex";
+                (modalImg as HTMLImageElement).src = src;
+                captionText.textContent = description || "";
+
+                // Añadir estado al historial si no estamos ya en modo modal
+                if (!window.location.hash.includes("modal-open")) {
+                    history.pushState({ modalOpen: true }, "", "#modal-open");
+                }
+            }
+        }
+
         // Seleccionar todas las imágenes del contenido
         const images = document.querySelectorAll(".content img");
 
@@ -71,21 +85,14 @@ const { Content } = await post.render();
             (img as HTMLElement).style.cursor = "zoom-in";
 
             img.addEventListener("click", () => {
-                if (modal && modalImg && captionText) {
-                    modal.style.display = "flex";
-                    (modalImg as HTMLImageElement).src = (
-                        img as HTMLImageElement
-                    ).src;
+                // Intentar obtener el caption del elemento em siguiente o del alt
+                const nextSibling = img.nextElementSibling;
+                const caption =
+                    nextSibling && nextSibling.tagName === "EM"
+                        ? nextSibling.textContent
+                        : (img as HTMLImageElement).alt;
 
-                    // Intentar obtener el caption del elemento em siguiente o del alt
-                    const nextSibling = img.nextElementSibling;
-                    const caption =
-                        nextSibling && nextSibling.tagName === "EM"
-                            ? nextSibling.textContent
-                            : (img as HTMLImageElement).alt;
-
-                    captionText.textContent = caption || "";
-                }
+                openModal((img as HTMLImageElement).src, caption);
             });
         });
 
@@ -99,20 +106,31 @@ const { Content } = await post.render();
                     // En Astro, los links procesados pueden tener rutas resueltas.
                     // Usamos el href directo.
                     const src = (link as HTMLAnchorElement).href;
-                    if (modal && modalImg && captionText) {
-                        modal.style.display = "flex";
-                        (modalImg as HTMLImageElement).src = src;
-                        captionText.textContent =
-                            (link as HTMLAnchorElement).title ||
-                            "Atajo de teclado";
-                    }
+                    const title =
+                        (link as HTMLAnchorElement).title || "Atajo de teclado";
+                    openModal(src, title);
                 });
             }
         });
 
         function closeModal() {
-            if (modal) modal.style.display = "none";
+            if (modal) {
+                modal.style.display = "none";
+                // Si el modal se cierra y el hash sigue ahí, volver atrás
+                if (window.location.hash === "#modal-open") {
+                    history.back();
+                }
+            }
         }
+
+        // Manejar el botón "Atrás" del navegador
+        window.addEventListener("popstate", (event) => {
+            if (modal && modal.style.display === "flex") {
+                // Si el modal está abierto y damos atrás, simplemente lo ocultamos visualmente
+                // (El cambio de URL/historial ya ocurrió automáticamente por el navegador)
+                modal.style.display = "none";
+            }
+        });
 
         if (closeBtn) closeBtn.addEventListener("click", closeModal);
 
