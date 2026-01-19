@@ -1,0 +1,256 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+import type { CollectionEntry } from "astro:content";
+
+const posts = (await getCollection("clases")).sort(
+    (a: CollectionEntry<"clases">, b: CollectionEntry<"clases">) =>
+        b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+type ClasesEntry = CollectionEntry<"clases">;
+---
+
+<Layout title="Bitácora de Clases">
+    <div class="container">
+        <header class="page-header">
+            <div class="header-content">
+                <span class="badge">Bitácora</span>
+                <h1>Seguimiento de Clases</h1>
+                <p>
+                    Aquí encontrarás el resumen, materiales y retroalimentación
+                    de cada sesión impartida.
+                </p>
+            </div>
+        </header>
+
+        <div class="timeline">
+            {
+                posts.map((post: ClasesEntry) => (
+                    <article class="timeline-item">
+                        <div class="date-marker">
+                            <span class="day">
+                                {post.data.pubDate.toLocaleDateString("es-ES", {
+                                    day: "numeric",
+                                })}
+                            </span>
+                            <span class="month">
+                                {post.data.pubDate.toLocaleDateString("es-ES", {
+                                    month: "short",
+                                })}
+                            </span>
+                        </div>
+                        <div class="content-card">
+                            <div class="meta">
+                                <span class="tag">{post.data.tags?.[0]}</span>
+                                <time>
+                                    {post.data.pubDate.toLocaleDateString(
+                                        "es-ES",
+                                        {
+                                            weekday: "long",
+                                            year: "numeric",
+                                            month: "long",
+                                            day: "numeric",
+                                        },
+                                    )}
+                                </time>
+                            </div>
+                            <h2>
+                                <a href={`/clases/${post.slug}`}>
+                                    {post.data.title}
+                                </a>
+                            </h2>
+                            <p>{post.data.description}</p>
+                            <a href={`/clases/${post.slug}`} class="read-more">
+                                Ver detalles de la clase &rarr;
+                            </a>
+                        </div>
+                    </article>
+                ))
+            }
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    .page-header {
+        text-align: center;
+        padding: 4rem 0 5rem;
+    }
+
+    .badge {
+        background-color: #eef2ff;
+        color: var(--color-primary, #2563eb);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 1.5rem;
+        display: inline-block;
+    }
+
+    .page-header h1 {
+        font-size: 3rem;
+        color: var(--text-main, #111827);
+        margin-bottom: 1rem;
+        line-height: 1.2;
+    }
+
+    .page-header p {
+        font-size: 1.25rem;
+        color: var(--text-muted, #6b7280);
+    }
+
+    /* Timeline */
+    .timeline {
+        position: relative;
+        padding-left: 2rem;
+        border-left: 2px solid #e5e7eb;
+    }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 4rem;
+    }
+
+    .timeline-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .date-marker {
+        position: absolute;
+        left: -4.5rem; /* Ajustado para alinear mejor */
+        top: 0;
+        background: #fff;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+    }
+
+    /* Conector visual pequeño */
+    .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -2rem;
+        top: 28px; /* Mitad de 60px aprox - borde */
+        width: 2rem;
+        height: 2px;
+        background: #e5e7eb;
+    }
+
+    .day {
+        font-size: 1.5rem;
+        line-height: 1;
+        color: var(--text-main, #111827);
+    }
+
+    .month {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: var(--text-muted, #6b7280);
+    }
+
+    .content-card {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 1rem;
+        padding: 2rem;
+        transition:
+            transform 0.2s,
+            box-shadow 0.2s;
+    }
+
+    .content-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    .meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        font-size: 0.875rem;
+        color: var(--text-muted, #6b7280);
+    }
+
+    .tag {
+        background: #f3f4f6;
+        padding: 0.25rem 0.75rem;
+        border-radius: 999px;
+        font-weight: 500;
+        color: var(--text-main, #111827);
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        margin-bottom: 0.75rem;
+        line-height: 1.3;
+    }
+
+    h2 a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    h2 a:hover {
+        color: var(--color-primary, #2563eb);
+    }
+
+    p {
+        color: var(--text-muted, #4b5563);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+
+    .read-more {
+        color: var(--color-primary, #2563eb);
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .read-more:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 640px) {
+        .timeline {
+            padding-left: 0;
+            border-left: none;
+        }
+
+        .timeline-item::before {
+            display: none;
+        }
+
+        .date-marker {
+            position: static;
+            margin-bottom: 1rem;
+            flex-direction: row;
+            width: auto;
+            height: auto;
+            padding: 0.5rem 1rem;
+            gap: 0.5rem;
+            display: inline-flex;
+        }
+    }
+</style>

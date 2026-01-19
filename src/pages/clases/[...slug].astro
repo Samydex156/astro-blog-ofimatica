@@ -1,0 +1,339 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+    const posts = await getCollection("clases");
+    return posts.map((post: CollectionEntry<"clases">) => ({
+        params: { slug: post.slug },
+        props: post,
+    }));
+}
+
+type Props = CollectionEntry<"clases">;
+
+const post = Astro.props;
+const { Content } = await post.render();
+---
+
+<Layout title={post.data.title}>
+    <article class="class-detail">
+        <header class="post-header">
+            <div class="meta">
+                <time
+                    >{
+                        post.data.pubDate.toLocaleDateString("es-ES", {
+                            weekday: "long",
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                        })
+                    }</time
+                >
+                {
+                    post.data.tags &&
+                        post.data.tags.map((tag: string) => (
+                            <span class="tag">{tag}</span>
+                        ))
+                }
+            </div>
+            <h1>{post.data.title}</h1>
+            <p class="description">{post.data.description}</p>
+        </header>
+
+        <div class="content markdown-body">
+            <Content />
+        </div>
+
+        <div class="back-link">
+            <a href="/clases">&larr; Volver a la Bitácora</a>
+        </div>
+    </article>
+
+    <!-- Modal de Imagen -->
+    <div id="image-modal" class="image-modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modal-img" />
+        <div id="caption"></div>
+    </div>
+
+    <script>
+        const modal = document.getElementById("image-modal");
+        const modalImg = document.getElementById("modal-img");
+        const captionText = document.getElementById("caption");
+        const closeBtn = document.querySelector(".close-modal");
+
+        // Seleccionar todas las imágenes del contenido
+        const images = document.querySelectorAll(".content img");
+
+        images.forEach((img) => {
+            // Añadir cursor de lupa
+            (img as HTMLElement).style.cursor = "zoom-in";
+
+            img.addEventListener("click", () => {
+                if (modal && modalImg && captionText) {
+                    modal.style.display = "flex";
+                    (modalImg as HTMLImageElement).src = (
+                        img as HTMLImageElement
+                    ).src;
+
+                    // Intentar obtener el caption del elemento em siguiente o del alt
+                    const nextSibling = img.nextElementSibling;
+                    const caption =
+                        nextSibling && nextSibling.tagName === "EM"
+                            ? nextSibling.textContent
+                            : (img as HTMLImageElement).alt;
+
+                    captionText.textContent = caption || "";
+                }
+            });
+        });
+
+        function closeModal() {
+            if (modal) modal.style.display = "none";
+        }
+
+        if (closeBtn) closeBtn.addEventListener("click", closeModal);
+
+        window.addEventListener("click", (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && modal && modal.style.display === "flex") {
+                closeModal();
+            }
+        });
+    </script>
+</Layout>
+
+<style>
+    .class-detail {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 4rem 1.5rem;
+    }
+
+    .post-header {
+        margin-bottom: 3rem;
+        text-align: center;
+    }
+
+    .meta {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        color: var(--text-muted, #6b7280);
+        font-size: 0.95rem;
+        flex-wrap: wrap;
+    }
+
+    .tag {
+        background: #f3f4f6;
+        padding: 0.25rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        color: var(--text-main, #374151);
+    }
+
+    h1 {
+        font-size: 2.5rem; /* Ajustado para ser un poco más pequeño que en index */
+        line-height: 1.2;
+        color: var(--text-main, #111827);
+        margin-bottom: 1rem;
+    }
+
+    .description {
+        font-size: 1.25rem;
+        color: var(--text-muted, #4b5563);
+        line-height: 1.6;
+    }
+
+    .content {
+        line-height: 1.8;
+        font-size: 1.1rem;
+        color: var(--text-main, #374151);
+    }
+
+    /* Estilos básicos para markdown si no hay global */
+    .content :global(h2) {
+        font-size: 1.75rem;
+        margin-top: 2.5rem;
+        margin-bottom: 1.25rem;
+        color: var(--text-main);
+    }
+
+    .content :global(h3) {
+        font-size: 1.4rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: var(--text-main);
+    }
+
+    .content :global(ul) {
+        margin-bottom: 1.5rem;
+        padding-left: 1.5rem;
+    }
+
+    .content :global(li) {
+        margin-bottom: 0.5rem;
+    }
+
+    .content :global(p) {
+        margin-bottom: 1.5rem;
+    }
+
+    .content :global(img) {
+        max-width: 100%;
+        height: auto;
+        border-radius: 0.5rem;
+        margin: 1.5rem 0;
+        box-shadow:
+            0 4px 6px -1px rgba(0, 0, 0, 0.1),
+            0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    .content :global(em) {
+        display: block;
+        text-align: center;
+        font-size: 0.9rem;
+        color: var(--text-muted, #6b7280);
+        margin-top: -1rem;
+        margin-bottom: 2rem;
+    }
+
+    .content :global(code) {
+        background-color: #1f2937;
+        color: #e5e7eb;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-size: 0.85em;
+        font-family:
+            ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+            "Liberation Mono", "Courier New", monospace;
+        border: 1px solid #374151;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    }
+
+    .back-link {
+        margin-top: 4rem;
+        padding-top: 2rem;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .back-link a {
+        color: var(--color-primary, #2563eb);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .back-link a:hover {
+        text-decoration: underline;
+    }
+
+    /* Estilos del Modal */
+    .image-modal {
+        display: none; /* Oculto por defecto */
+        position: fixed;
+        z-index: 2000; /* Por encima de todo */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.95);
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        animation: fadeIn 0.2s ease-in-out;
+        backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+        margin: auto;
+        display: block;
+        max-width: 90%;
+        max-height: 85vh;
+        border-radius: 4px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        animation: zoomIn 0.3s;
+        object-fit: contain;
+    }
+
+    #caption {
+        margin: 1.5rem auto 0;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+        text-align: center;
+        color: #e5e7eb;
+        padding: 10px 0;
+        font-size: 1.1rem;
+        font-weight: 300;
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 25px;
+        right: 40px;
+        color: #f3f4f6;
+        font-size: 45px;
+        font-weight: 300;
+        line-height: 1;
+        transition: 0.2s;
+        cursor: pointer;
+        z-index: 2001;
+        background: rgba(255, 255, 255, 0.1);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .close-modal:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    @keyframes zoomIn {
+        from {
+            transform: scale(0.9);
+            opacity: 0;
+        }
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Ajuste responsivo para el botón de cerrar */
+    @media (max-width: 640px) {
+        .close-modal {
+            top: 15px;
+            right: 15px;
+            font-size: 35px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .modal-content {
+            width: 95%;
+            max-width: 95%;
+        }
+    }
+</style>
