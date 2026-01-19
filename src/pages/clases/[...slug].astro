@@ -89,19 +89,25 @@ const { Content } = await post.render();
             });
         });
 
-        // Seleccionar los enlaces de atajos
-        const shortcutLinks = document.querySelectorAll(".shortcut-link");
-        shortcutLinks.forEach((link) => {
-            link.addEventListener("click", (e) => {
-                e.preventDefault();
-                const src = (link as HTMLAnchorElement).href;
-                if (modal && modalImg && captionText) {
-                    modal.style.display = "flex";
-                    (modalImg as HTMLImageElement).src = src;
-                    captionText.textContent =
-                        (link as HTMLAnchorElement).title || "Atajo de teclado";
-                }
-            });
+        // Seleccionar los enlaces de atajos (buscando el icono 📷)
+        const allLinks = document.querySelectorAll(".content a");
+        allLinks.forEach((link) => {
+            if (link.textContent && link.textContent.trim() === "📷") {
+                link.classList.add("shortcut-link");
+                link.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    // En Astro, los links procesados pueden tener rutas resueltas.
+                    // Usamos el href directo.
+                    const src = (link as HTMLAnchorElement).href;
+                    if (modal && modalImg && captionText) {
+                        modal.style.display = "flex";
+                        (modalImg as HTMLImageElement).src = src;
+                        captionText.textContent =
+                            (link as HTMLAnchorElement).title ||
+                            "Atajo de teclado";
+                    }
+                });
+            }
         });
 
         function closeModal() {
