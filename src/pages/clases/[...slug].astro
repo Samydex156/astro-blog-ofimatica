@@ -89,6 +89,21 @@ const { Content } = await post.render();
             });
         });
 
+        // Seleccionar los enlaces de atajos
+        const shortcutLinks = document.querySelectorAll(".shortcut-link");
+        shortcutLinks.forEach((link) => {
+            link.addEventListener("click", (e) => {
+                e.preventDefault();
+                const src = (link as HTMLAnchorElement).href;
+                if (modal && modalImg && captionText) {
+                    modal.style.display = "flex";
+                    (modalImg as HTMLImageElement).src = src;
+                    captionText.textContent =
+                        (link as HTMLAnchorElement).title || "Atajo de teclado";
+                }
+            });
+        });
+
         function closeModal() {
             if (modal) modal.style.display = "none";
         }
@@ -111,7 +126,7 @@ const { Content } = await post.render();
 
 <style>
     .class-detail {
-        max-width: 720px;
+        max-width: 1000px;
         margin: 0 auto;
         padding: 4rem 1.5rem;
     }
@@ -217,6 +232,22 @@ const { Content } = await post.render();
             "Liberation Mono", "Courier New", monospace;
         border: 1px solid #374151;
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    }
+
+    .content :global(.shortcut-link) {
+        text-decoration: none;
+        margin-left: 0.5rem;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+        vertical-align: middle;
+        font-size: 1.2em;
+    }
+
+    .content :global(.shortcut-link:hover) {
+        opacity: 1;
+        transform: scale(1.1);
+        display: inline-block;
     }
 
     .back-link {
