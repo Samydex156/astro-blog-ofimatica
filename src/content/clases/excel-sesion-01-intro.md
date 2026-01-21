@@ -42,6 +42,7 @@ Un atajo de teclado es una combinación de teclas que se presionan para realizar
     *   `Ctrl + Flecha Derecha` : Ir a la última columna de un bloque u hoja
         ![Ctrl + Flecha Derecha](./atajos-imagenes/excel_ctrl_flecha_derecha_ir_final_columna.png)
     *   `Ctrl + Flecha Izquierda` : Ir a la primera columna de un bloque u hoja
+        ![Ctrl + Flecha Izquierda](./atajos-imagenes/excel_ctrl_flecha_izquierda_primera_columna_hoja.png)
     *   `Ctrl + Flecha Arriba` : Ir a la primera fila de un bloque u Hoja.
         ![Ctrl + Flecha Arriba](./atajos-imagenes/excel_ctrl_flecha_arriba_ir_inicio_hoja.png)
     *   `Ctrl + Flecha Abajo` : Ir a la última fila de un bloque u Hoja.
@@ -49,7 +50,11 @@ Un atajo de teclado es una combinación de teclas que se presionan para realizar
     *   `Ctrl + P` : Ir a la vista preliminar de Impresión
         ![Ctrl + P](./atajos-imagenes/excel_ctrl_p_ir_vista_preliminar_impresion.png)
     *   `Ctrl + Z` : Deshacer o volver a un estado anterior.
+        ![Ctrl + Z](./atajos-imagenes/excel_ctrl_z_deshacer_estado_anterior.png)
     *   `Ctrl + U` : Crear un nuevo libro de Excel
+        ![Ctrl + U](./atajos-imagenes/excel_ctrl_u_nuevo_libro_excel.png)
+    *   `Alt + F4` : Cerrar ventana actual
+        ![Alt + F4](./atajos-imagenes/excel_alt_f4_cerrar_ventana.png)
 
 ### Tarea
 Se subirá en el transcurso de la semana (Pendiente)...

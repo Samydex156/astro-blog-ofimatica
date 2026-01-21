@@ -18,11 +18,16 @@
 			<nav class="container">
 				<a href="/" class="logo">Ofimática</a>
 				<div class="nav-links">
+					<a href="/" class="nav-link clases">Clases</a>
 					<a href="/word" class="nav-link word">Word</a>
 					<a href="/excel" class="nav-link excel">Excel</a>
 					<a href="/powerpoint" class="nav-link powerpoint"
 						>PowerPoint</a
 					>
+					<a href="/publisher" class="nav-link publisher">Publisher</a
+					>
+					<a href="/internet" class="nav-link internet">Internet</a>
+					<a href="/windows" class="nav-link windows">Windows</a>
 				</div>
 			</nav>
 		</header>
@@ -32,8 +37,8 @@
 		<footer class="site-footer">
 			<div class="container">
 				<p>
-					&copy; {new Date().getFullYear()} Nueva tecnología - Docente: Samuel Durán
-					- Ofimática
+					&copy; {new Date().getFullYear()} Nueva tecnología - Docente:
+					Samuel Durán - Ofimática
 				</p>
 			</div>
 		</footer>
@@ -46,6 +51,10 @@
 		--color-word: #2b579a;
 		--color-excel: #217346;
 		--color-ppt: #d24726;
+		--color-publisher: #0072c6;
+		--color-internet: #1b99d4;
+		--color-windows: #0078d7;
+		--color-clases: #4f46e5;
 
 		/* Neutral Colors */
 		--bg-body: #f9fafb;
@@ -188,6 +197,18 @@
 	}
 	.nav-link.powerpoint:hover {
 		color: var(--color-ppt);
+	}
+	.nav-link.publisher:hover {
+		color: var(--color-publisher);
+	}
+	.nav-link.internet:hover {
+		color: var(--color-internet);
+	}
+	.nav-link.windows:hover {
+		color: var(--color-windows);
+	}
+	.nav-link.clases:hover {
+		color: var(--color-clases);
 	}
 
 	/* Main */
