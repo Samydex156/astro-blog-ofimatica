@@ -123,6 +123,20 @@ const { Content } = await post.render();
             }
         });
 
+        // Envolver tablas para hacerlas responsivas
+        const tables = document.querySelectorAll(".content table");
+        tables.forEach((table) => {
+            // Crear wrapper
+            const wrapper = document.createElement("div");
+            wrapper.className = "table-wrapper";
+
+            // Insertar wrapper antes de la tabla
+            table.parentNode?.insertBefore(wrapper, table);
+
+            // Mover tabla dentro del wrapper
+            wrapper.appendChild(table);
+        });
+
         function closeModal() {
             if (modal) {
                 modal.style.display = "none";
@@ -270,15 +284,25 @@ const { Content } = await post.render();
     }
 
     /* Estilos de Tabla */
-    .content :global(table) {
+    .content :global(.table-wrapper) {
         width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
+        overflow-x: auto;
         margin: 2rem 0;
         border-radius: 8px;
-        overflow: hidden; /* Para que el borde radius funcione en esquinas */
         border: 1px solid #e5e7eb;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling en iOS */
+    }
+
+    .content :global(table) {
+        width: 100%;
+        min-width: 600px; /* Asegura que la tabla no se aplaste en móviles */
+        border-collapse: separate;
+        border-spacing: 0;
+        margin: 0; /* El margen ahora lo maneja el wrapper */
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
     }
 
     .content :global(th),
@@ -296,6 +320,7 @@ const { Content } = await post.render();
         text-transform: uppercase;
         font-size: 0.8rem;
         letter-spacing: 0.05em;
+        white-space: nowrap; /* Evita que los encabezados se rompan mal */
     }
 
     .content :global(tr:last-child td) {
