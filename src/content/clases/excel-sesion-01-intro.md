@@ -27,34 +27,23 @@ El pasado sábado 17 de enero de 2026 tuvimos nuestra primera sesión introducto
 
 2.  **Atajos de teclado**:
 Un atajo de teclado es una combinación de teclas que se presionan para realizar una acción específica.
-    *   `Windows + U` : Abre la pantalla de configuración de accesibilidad de Windows
-        ![Windows + U](./atajos-imagenes/excel_win_U_abrir_accesibilidad_pantalla.png)
-    *   `Windows + E` : Abre la ventana del explorador de archivos
-        ![Windows + E](./atajos-imagenes/excel_win_e_abrir_explorador_archivos.png)
-    *   `Ctrl + Shift + N` : Crea una nueva carpeta
-        ![Ctrl + Shift + N](./atajos-imagenes/excel_ctrl_shift_n_crear_nueva_carpeta.png)
-    *   `F12` : Abre la ventana de "Guardar como". Y `Fn + F12` (En la mayoría de modelos de Laptos)
-        ![F12](./atajos-imagenes/excel_f12_guardar_como.png)
-    *   `Ctrl + Fin` : Ir al final de un bloque de datos.
-        ![Ctrl + Fin](./atajos-imagenes/excel_ctrl_fin_ir_final_documento.png)
-    *   `Ctrl + Inicio` : Ir al inicio de un bloque de datos o al inicio de la hoja
-        ![Ctrl + Inicio](./atajos-imagenes/excel_ctrl_inicio_ir_principio_documento.png)
-    *   `Ctrl + Flecha Derecha` : Ir a la última columna de un bloque u hoja
-        ![Ctrl + Flecha Derecha](./atajos-imagenes/excel_ctrl_flecha_derecha_ir_final_columna.png)
-    *   `Ctrl + Flecha Izquierda` : Ir a la primera columna de un bloque u hoja
-        ![Ctrl + Flecha Izquierda](./atajos-imagenes/excel_ctrl_flecha_izquierda_primera_columna_hoja.png)
-    *   `Ctrl + Flecha Arriba` : Ir a la primera fila de un bloque u Hoja.
-        ![Ctrl + Flecha Arriba](./atajos-imagenes/excel_ctrl_flecha_arriba_ir_inicio_hoja.png)
-    *   `Ctrl + Flecha Abajo` : Ir a la última fila de un bloque u Hoja.
-        ![Ctrl + Flecha Abajo](./atajos-imagenes/excel_ctrl_flecha_abajo_ir_final_hoja.png)
-    *   `Ctrl + P` : Ir a la vista preliminar de Impresión
-        ![Ctrl + P](./atajos-imagenes/excel_ctrl_p_ir_vista_preliminar_impresion.png)
-    *   `Ctrl + Z` : Deshacer o volver a un estado anterior.
-        ![Ctrl + Z](./atajos-imagenes/excel_ctrl_z_deshacer_estado_anterior.png)
-    *   `Ctrl + U` : Crear un nuevo libro de Excel
-        ![Ctrl + U](./atajos-imagenes/excel_ctrl_u_nuevo_libro_excel.png)
-    *   `Alt + F4` : Cerrar ventana actual
-        ![Alt + F4](./atajos-imagenes/excel_alt_f4_cerrar_ventana.png)
+
+| Atajo | Acción | Referencia |
+| :--- | :--- | :---: |
+| `Windows + U` | Abre la configuración de accesibilidad | ![Windows + U](./atajos-imagenes/excel_win_U_abrir_accesibilidad_pantalla.png) |
+| `Windows + E` | Abre el explorador de archivos | ![Windows + E](./atajos-imagenes/excel_win_e_abrir_explorador_archivos.png) |
+| `Ctrl + Shift + N` | Crea una nueva carpeta | ![Ctrl + Shift + N](./atajos-imagenes/excel_ctrl_shift_n_crear_nueva_carpeta.png) |
+| `F12` / `Fn + F12` | Abre "Guardar como" | ![F12](./atajos-imagenes/excel_f12_guardar_como.png) |
+| `Ctrl + Fin` | Ir al final de un bloque de datos | ![Ctrl + Fin](./atajos-imagenes/excel_ctrl_fin_ir_final_documento.png) |
+| `Ctrl + Inicio` | Ir al inicio de un bloque de datos | ![Ctrl + Inicio](./atajos-imagenes/excel_ctrl_inicio_ir_principio_documento.png) |
+| `Ctrl + Flecha Der` | Ir a la última columna | ![Ctrl + Flecha Derecha](./atajos-imagenes/excel_ctrl_flecha_derecha_ir_final_columna.png) |
+| `Ctrl + Flecha Izq` | Ir a la primera columna | ![Ctrl + Flecha Izquierda](./atajos-imagenes/excel_ctrl_flecha_izquierda_primera_columna_hoja.png) |
+| `Ctrl + Flecha Arr` | Ir a la primera fila | ![Ctrl + Flecha Arriba](./atajos-imagenes/excel_ctrl_flecha_arriba_ir_inicio_hoja.png) |
+| `Ctrl + Flecha Abj` | Ir a la última fila | ![Ctrl + Flecha Abajo](./atajos-imagenes/excel_ctrl_flecha_abajo_ir_final_hoja.png) |
+| `Ctrl + P` | Vista preliminar de Impresión | ![Ctrl + P](./atajos-imagenes/excel_ctrl_p_ir_vista_preliminar_impresion.png) |
+| `Ctrl + Z` | Deshacer | ![Ctrl + Z](./atajos-imagenes/excel_ctrl_z_deshacer_estado_anterior.png) |
+| `Ctrl + U` | Crear un nuevo libro de Excel | ![Ctrl + U](./atajos-imagenes/excel_ctrl_u_nuevo_libro_excel.png) |
+| `Alt + F4` | Cerrar ventana actual | ![Alt + F4](./atajos-imagenes/excel_alt_f4_cerrar_ventana.png) |
 
 ### Tarea
 Se subirá en el transcurso de la semana (Pendiente)...

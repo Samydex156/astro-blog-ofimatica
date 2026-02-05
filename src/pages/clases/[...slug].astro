@@ -84,6 +84,16 @@ const { Content } = await post.render();
             // Añadir cursor de lupa
             (img as HTMLElement).style.cursor = "zoom-in";
 
+            // Detectar si es una imagen de atajo (convención: tiene guiones bajos o está en carpeta atajos)
+            const src = (img as HTMLImageElement).src;
+            // Verificamos si contiene 'excel_' (común en los atajos) o 'atajos' en la ruta
+            // Las imágenes normales usan guiones '-' (ej: excel-partes...)
+            const isShortcut = src.includes("excel_") || src.includes("atajos");
+
+            if (isShortcut) {
+                img.classList.add("shortcut-img");
+            }
+
             img.addEventListener("click", () => {
                 // Intentar obtener el caption del elemento em siguiente o del alt
                 const nextSibling = img.nextElementSibling;
@@ -256,6 +266,52 @@ const { Content } = await post.render();
             "Liberation Mono", "Courier New", monospace;
         border: 1px solid #374151;
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        white-space: nowrap; /* Evita que los atajos se rompan */
+    }
+
+    /* Estilos de Tabla */
+    .content :global(table) {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin: 2rem 0;
+        border-radius: 8px;
+        overflow: hidden; /* Para que el borde radius funcione en esquinas */
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .content :global(th),
+    .content :global(td) {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid #e5e7eb;
+        vertical-align: middle;
+    }
+
+    .content :global(th) {
+        background-color: #f3f4f6;
+        font-weight: 600;
+        color: var(--text-main, #374151);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.05em;
+    }
+
+    .content :global(tr:last-child td) {
+        border-bottom: none;
+    }
+
+    .content :global(tr:hover td) {
+        background-color: #f8fafc;
+    }
+
+    /* Ajustes específicos para la columna de imagen/referencia */
+    .content :global(td:last-child),
+    .content :global(th:last-child) {
+        text-align: center;
+        width: 1%; /* Intenta comprimir al contenido (imagen) */
+        white-space: nowrap;
     }
 
     .content :global(.shortcut-link) {
@@ -272,6 +328,28 @@ const { Content } = await post.render();
         opacity: 1;
         transform: scale(1.1);
         display: inline-block;
+    }
+
+    .content :global(.shortcut-img) {
+        max-width: 100px;
+        height: auto;
+        object-fit: contain;
+        margin: 0.5rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+        vertical-align: middle;
+        display: inline-block;
+        background-color: white;
+    }
+
+    .content :global(.shortcut-img:hover) {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-color: #d1d5db;
+        cursor: zoom-in;
     }
 
     .back-link {
