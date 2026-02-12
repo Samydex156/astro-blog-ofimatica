@@ -1,13 +1,13 @@
 ---
-title: 'Sesión 2: Formato de Celdas y Tablas (Planilla de Notas)'
-description: 'En esta clase aprendimos a modificar el tamaño de filas y columnas, combinar celdas y aplicar bordes para dar formato a nuestras tablas.'
-pubDate: '2026-01-24'
+title: 'Sesión 3: Operaciones y Fórmulas (Planilla de Notas)'
+description: 'En esta clase practicamos el formato de celdas y tablas. Aplicamos fórmulas para obtener resultados de aprobación de estudiantes.'
+pubDate: '2026-01-31'
 tags: ['Excel', 'Formato', 'Bordes', 'Clase']
 ---
 
 ## Resumen de la Clase
 
-En esta segunda sesión nos enfocamos en mejorar la presentación de nuestros datos mediante herramientas de formato básico. Aprender a organizar visualmente la información es clave para crear hojas de cálculo legibles y profesionales.
+En la tercera sesión utilizamos operaciones y fórmulas para obtener resultados de aprobación de estudiantes. Operaciones como la suma, la resta, división. Fórmulas como la función suma, promedio, función condicional si.
 
 ### Temas Cubiertos:
 

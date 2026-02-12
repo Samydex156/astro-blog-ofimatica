@@ -1,8 +1,8 @@
 ---
-title: 'Sesión 2: Formato de Celdas y Tablas (Planilla de Notas)'
-description: 'En esta clase aprendimos a modificar el tamaño de filas y columnas, combinar celdas y aplicar bordes para dar formato a nuestras tablas.'
-pubDate: '2026-01-24'
-tags: ['Excel', 'Formato', 'Bordes', 'Clase']
+title: 'Sesión 1: Introducción a Publisher y Plantilla de Certificado'
+description: 'En esta clase practicamos el cálculo del beneficio de un producto.'
+pubDate: '2026-02-07'
+tags: ['Publisher', 'Plantillas', 'Certificado', 'Clase']
 ---
 
 ## Resumen de la Clase
